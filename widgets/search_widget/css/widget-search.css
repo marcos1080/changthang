@@ -1,0 +1,43 @@
+
+.changsearch .search-form {
+	position: relative;
+}
+
+.chang-search-wrapper {
+	overflow: hidden;
+}
+
+.chang-search-wrapper > div {
+	position: relative;
+	display: inline-block;
+	margin-left: -4px;
+	height: 100%;
+}
+
+.chang-search-wrapper .search-field {
+	vertical-align: top;
+	height: 100%;
+	padding: 0px 8px;
+	position: relative;
+	top: 50%;
+	transform: translateY( -50% );
+	-o-transform: translateY( -50% );
+	-ms-transform: translateY( -50% );
+	-moz-transform: translateY( -50% );
+	-webkit-transform: translateY( -50% );
+}
+
+.chang-search-wrapper .search-submit,
+.chang-search-wrapper .search-submit-hover {
+	height: 100%;
+}
+
+.chang-search-wrapper .search-submit-hover {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.chang-search-submit input {
+	background-color: transparent;
+}

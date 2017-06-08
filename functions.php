@@ -3,13 +3,40 @@
 add_theme_support( 'post-thumbnails' ); 
 add_theme_support( 'custom-logo' );
 
-#function remove_admin_login_header() {
-#	remove_action('wp_head', '_admin_bar_bump_cb');
-#}
+function remove_admin_login_header() {
+	remove_action('wp_head', '_admin_bar_bump_cb');
+}
 
-#add_action('get_header', 'remove_admin_login_header');
+add_action('get_header', 'remove_admin_login_header');
 
-function javascript_scripts() {
+function scripts() {
+	// Load our main stylesheet.
+	wp_enqueue_style( 'common-style', get_stylesheet_uri() );
+	
+	// Load specific stylesheets
+	//$column_count = esc_attr( get_theme_mod( 'column-count' ) );
+	//wp_enqueue_style( $column_count.'-columns', get_template_directory_uri().'/css/'.$column_count.'-column.css' );
+
+	// Menu
+	switch( esc_attr( get_theme_mod( 'menu-layout' ) ) ) {
+		case 'accordion':
+			wp_enqueue_script( 'menu-script',
+				get_template_directory_uri() . '/javascript/menu-accordion.js',
+				array( 'jquery' )
+			);
+			wp_enqueue_style( 'menu-accordion', get_template_directory_uri().'/css/menu-accordion.css' );
+			break;
+		case 'all':
+			wp_enqueue_script( 'menu-script',
+				get_template_directory_uri() . '/javascript/menu-submenu-tree.js',
+				array( 'jquery' )
+			);
+			wp_enqueue_style( 'menu-accordion', get_template_directory_uri().'/css/menu-submenu-tree.css' );
+			break;
+		case 'side':
+			break;
+	}
+	
 }
 
 function mobile_scripts() {
@@ -18,7 +45,16 @@ function mobile_scripts() {
 function desktop_scripts() {
 }
 
-add_action( 'wp_enqueue_scripts', 'javascript_scripts' );
+add_action( 'wp_enqueue_scripts', 'scripts' );
+
+function admin_scripts() {
+	wp_enqueue_script( 'media-selector-script',
+		get_template_directory_uri() . '/javascript/media-selector.js',
+		array( 'jquery' )
+	);
+}
+
+add_action( 'admin_enqueue_scripts', 'admin_scripts' );
 
 // Load mobile or desktop specific scripts
 if( wp_is_mobile() ) {
@@ -27,20 +63,74 @@ if( wp_is_mobile() ) {
 	add_action( 'wp_enqueue_scripts', 'desktop_scripts' );
 }
 
-if ( ! function_exists( 'breeturner_setup' ) ) :
+if ( ! function_exists( 'chang_setup' ) ) :
 
-function header_setup() {
+function chang_setup() {
 	$header_image_args = array(
 	'width'         => 0,
 	'height'        => 0,
 	'uploads'       => true,
 	);
 	add_theme_support( 'custom-header', $header_image_args );
+	
+	// This theme uses wp_nav_menu() in two locations.
+	register_nav_menus( array(
+		'primary' => __( 'Primary Menu',      'chang' ),
+		'social'  => __( 'Social Links Menu', 'chang' ),
+	) );
 }
 
-header_setup();
-
 endif;
+add_action( 'after_setup_theme', 'chang_setup' );
+
+/**
+ * Register widget area.
+ *
+ * @link https://codex.wordpress.org/Function_Reference/register_sidebar
+ */
+function chang_widgets_init() {
+	register_sidebar( 
+		array(
+			'name'          => __( 'Widget Area', 'chang' ),
+			'id'            => 'sidebar-1',
+			'description'   => __( 'Add widgets here to appear in your menu.', 'chang' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
+	
+	register_sidebar( 
+		array(
+			'name'          => __( 'Footer Widget Area', 'chang' ),
+			'id'            => 'sidebar-2',
+			'description'   => __( 'Add widgets here to appear in your footer.', 'chang' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
+}
+
+add_action( 'widgets_init', 'chang_widgets_init' );
+
+// Load css for footer.
+function footer_css() {
+	// Get number of widgets in the footer.
+	$sidebars_widgets = wp_get_sidebars_widgets();
+	$number_of_widgets = count( (array) $sidebars_widgets[ 'sidebar-2' ] );
+	?>
+		<style type="text/css">
+			#footer-widget-area .widget {
+				width: <?php echo ( 100 / $number_of_widgets ).'%'; ?>;
+			}
+		</style>	
+	<?php
+}
+
+add_action( 'wp_head', 'footer_css' );
 
 function custom_comments( $comment, $args, $depth ) {
     $GLOBALS['comment'] = $comment;
@@ -90,161 +180,7 @@ function wpdocs_custom_excerpt_length( $length ) {
 
 add_filter( 'excerpt_length', 'wpdocs_custom_excerpt_length', 999 );
 
-/* Column builder classes and functions. */
 
-/* Convert integer to text representation. Used for css tags. */
-function num_to_text( $number ) {
-	// Just going up to 6, don't think I'll need more. Adjust if neccessary.
-	$text = '';
-	
-	switch ( $number ) {
-		case 1: 
-			$text = 'one';
-			break;
-		case 2: 
-			$text = 'two';
-			break;
-		case 3: 
-			$text = 'three';
-			break;
-		case 4: 
-			$text = 'four';
-			break;
-		case 5: 
-			$text = 'five';
-			break;
-		case 6: 
-			$text = 'six';
-			break;
-	}
-	
-	return $text;
-}
-
-class Post_Wrapper {
-	var $col_wrappers;
-	
-	function __construct( $num_of_cols ) {
-		$this->col_wrappers = [];
-		
-		for( $count = 0; $count < $num_of_cols; $count++ ) {
-			array_push( $this->col_wrappers, new Column_Wrapper( $count + 1 ) );
-		}
-	}
-	
-	function add_post( $post_ID ) {
-		foreach( $this->col_wrappers as $wrapper ) {
-			$wrapper->add_post( new Post( $post_ID ) );
-		}
-	}
-	
-	function print() {
-		foreach( $this->col_wrappers as $wrapper ) {
-			$wrapper->print();
-		}
-	}
-}
-
-class Column_Wrapper {
-	var $num_of_cols;
-	var $columns;
-
-	function __construct( $num_of_cols ) {
-		$this->num_of_cols = $num_of_cols;
-		$this->columns = [];
-		
-		for( $count = 0; $count < $num_of_cols; $count++ ) {
-			array_push( $this->columns, new Column( $count + 1 ) );
-		}
-	}
-	
-	function add_post( $post ) {
-		// Get smallest column.
-		$count = 0;
-		$smallest = $this->columns[$count];
-		
-		for( ; $count < $this->num_of_cols; $count++ ) {
-			if ( $this->columns[$count]->get_height() < $smallest->get_height() ) {
-				$smallest = $this->columns[$count];
-			}
-		}
-		$smallest->add_post( $post );
-	}
-	
-	function print() {
-		$num_of_cols = num_to_text( $this->num_of_cols );
-		$label = 'columns';
-		if ( $this->num_of_cols == 1 ) {
-			$label = 'column';
-		}
-		echo '<div id="'.$num_of_cols.'-'.$label.'">';
-		foreach( $this->columns as $column ) {
-			$column->print();
-		}
-		echo '</div>';
-	}
-}
-
-class Column {
-	var $col_number;
-	var $height;
-	var $posts;
-	
-	function __construct( $col_number ) {
-		$this->col_number = num_to_text( $col_number );
-		$this->height = 0;
-		$this->posts = [];
-	}
-	
-	function get_height() {
-		return $this->height;
-	}
-	
-	function add_post( $post ) {
-		array_push($this->posts, $post);
-		if ( $post->has_thumbnail() == true ) {
-			$this->height += 2;
-		} else {
-			$this->height += 1;
-		}
-	}
-	
-	function print() {
-		echo '<ul class="column-'.$this->col_number.' posts">';
-		foreach( $this->posts as $post ) {
-			$post->print();
-		}
-		echo '</ul>';
-	}
-}
-
-class Post {
-	var $post;
-	
-	function __construct( $post ) {
-		$this->post = new WP_Query( array( 'post_type' => 'post',
-													  'p' => $post ) );
-	}
-	
-	function has_thumbnail() {
-		$this->post->the_post();
-		$has_thumb = false;
-		if( has_post_thumbnail() ) {
-			$has_thumb = true;
-		}
-		
-		$this->post->rewind_posts();
-													  
-		return $has_thumb;
-	}
-	
-	function print() {
-		$this->post->the_post();
-		
-		// Call blog-post.php to print html.
-		get_template_part( 'blog', 'post' );
-	}
-}
 
 /* functions for navigation */
 function top_post_nav( $prev, $next ) {
@@ -274,5 +210,55 @@ function post_nav( $prev, $next ) {
 	echo '	</div>';
 	echo '</div>';
 }
+
+/*******************************************************************************
+
+	Load column builder funtions. Used for non-js browsing.
+
+*******************************************************************************/
+
+get_template_part( 'functions', 'column_builder' );
+
+/*******************************************************************************
+
+	Custom Meta Box for Post. Footer Info
+
+*******************************************************************************/
+
+get_template_part( 'functions', 'metaboxes' );
+
+/*******************************************************************************
+
+	Load theme options page.
+
+*******************************************************************************/
+
+add_action('admin_init', get_template_part( 'functions', 'theme_options' ) );
+add_action('admin_init', get_template_part( 'inc/social_media_icons' ) );
+
+/*******************************************************************************
+
+	Load theme widgets.
+
+*******************************************************************************/
+
+add_action('admin_init', get_template_part( 'widgets/social_media_icons_widget' ) );
+add_action('admin_init', get_template_part( 'widgets/attribution_widget/attribution_widget' ) );
+add_action('admin_init', get_template_part( 'widgets/social_media_widget/social_media_widget' ) );
+add_action('admin_init', get_template_part( 'widgets/search_widget/search_widget' ) );
+
+/*******************************************************************************
+
+	Load customizer options.
+
+*******************************************************************************/
+
+add_action('admin_init', get_template_part( 'inc/customizer', 'page_layout' ) );
+add_action('admin_init', get_template_part( 'inc/customizer', 'general_layout' ) );
+add_action('admin_init', get_template_part( 'inc/customizer', 'menu' ) );
+add_action('admin_init', get_template_part( 'inc/customizer', 'featured_post' ) );
+add_action('admin_init', get_template_part( 'inc/customizer', 'post_list' ) );
+add_action('admin_init', get_template_part( 'inc/customizer', 'header' ) );
+add_action('admin_init', get_template_part( 'inc/customizer', 'footer' ) );
 
 ?>

@@ -1,11 +1,11 @@
 			<div id="footer">
-				<div id="info">
-					<p>&copy; <?php echo date( 'Y' ); ?>, Ray Chang</p>
-					<p>Site by Mark Stuart</p>
-				</div>
-				<div id="social-icons">
-				</div>
+				<?php if ( is_active_sidebar( 'sidebar-2' ) ) : ?>
+					<div id="footer-widget-area" class="widget-area" >
+						<?php dynamic_sidebar( 'sidebar-2' ); ?>
+					</div><!-- .widget-area -->
+				<?php endif; ?>
 			</div>
 		</div>
+	<?php wp_footer(); ?>
 	</body>
 </html>

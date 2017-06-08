@@ -10,3 +10,658 @@ License URI: TODO
 Tags: blog
 Text Domain: breeturner
 */
+
+/*******************************************************************************
+
+	Fonts.
+
+*******************************************************************************/
+@font-face {
+	font-family: "Helvetica Med";
+	src: url("fonts/Helvetica/HelveticaNeueLTStd-Md.otf");
+}
+
+@font-face {
+	font-family: "OpenSans Regular";
+	src: url("fonts/opensans/OpenSans-Regular.ttf");
+}
+
+@font-face {
+	font-family: "Raleway Medium";
+	src: url("fonts/raleway/Raleway-Medium.ttf");
+}
+
+/*******************************************************************************
+
+	Reset defaults..
+
+*******************************************************************************/
+
+html {
+	padding: 0px;
+	margin: 0px;
+}
+
+
+body {
+	padding: 0px;
+	margin: 0px;
+}
+
+a {
+	outline: 0;
+	color: #000000;
+	text-decoration: none;
+	font-weight: bold;
+	font-family: "OpenSans Regular", arial, sans-serif;
+}
+
+a:link,
+a:visited {
+	color: #000000;
+	text-decoration: none;
+	font-weight: bold;
+	font-family: "OpenSans Regular", arial, sans-serif;
+}
+
+ul {
+	padding: 0px;
+	margin: 0px;
+	vertical-align: top;
+	list-style-type: none;
+}
+
+p {
+  font-family:        "Raleway Medium", "Helvetica Med";
+  line-height:        1.4em;
+}
+
+h2 {
+  font-family:        "OpenSans Regular", arial, sans-serif;
+  font-size:          1.4em;
+}
+
+h3 {
+  font-family:       "OpenSans Regular", arial, sans-serif;
+  font-size:         1.1em;
+}
+
+/*******************************************************************************
+
+	Main Body.
+
+*******************************************************************************/
+
+html {
+	font-size: small;
+	height: 100%;
+}
+
+/* Case for admin bar showing */
+body.customize-support #wrapper {
+	padding-top: 32px;
+}
+
+#wrapper {
+	width: 100%;
+	max-width: 960px;
+	margin-left: auto;
+	
+	margin-right: auto;
+	overflow: hidden;
+}
+
+#content {
+	overflow: hidden;
+}
+
+/*******************************************************************************
+
+	Header
+
+*******************************************************************************/
+
+#header {
+
+}
+
+#header #title {
+	height: 52px;
+}
+
+#header #logo {
+	display: inline-block;
+	height: 100%;
+}
+
+#header #site-name {
+	display: inline-block;
+	height: 100%;
+	vertical-align: top;
+	padding-left: 9px;
+}
+
+#header h1 {
+	font-family: "Raleway Medium";
+	margin: 0px;
+	position: relative;
+	top: 50%;
+	transform: translateY( -50% );
+	-o-transform: translateY( -50% );
+	-ms-transform: translateY( -50% );
+	-moz-transform: translateY( -50% );
+	-webkit-transform: translateY( -50% );
+}
+
+/*******************************************************************************
+
+	Menu & Widget area.
+
+*******************************************************************************/
+
+
+#widget-area,
+#primary-menu {
+	display: inline-block;
+	height: 100%;
+	margin-left: -4px;
+}
+
+#primary-menu .menu-level-1 {
+	margin-left: -4px;
+}
+
+#primary-menu > *,
+.widget {
+	height: 100%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+#menu.no-js .widget > *:nth-child(2),
+.no-js #primary-menu > li > ul {
+	height: 0px;
+	visibility: hidden;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	background-color: white;
+	border-bottom: 2px solid black;
+	padding-bottom: 10px;
+	z-index: 10;
+}
+
+.js #primary-menu > li > ul {
+	display: none;
+	position: absolute;
+	left: 0px;
+	width: 100%;
+	background-color: white;
+	border-bottom: 2px solid black;
+	padding-bottom: 10px;
+	z-index: 10;
+}
+
+#menu .widget > *:first-child {
+	height: auto;
+	visibility: visible;
+}
+
+#menu.no-js .widget:hover > *:last-child,
+.no-js #primary-menu > li:hover > ul {
+	height: auto;
+	visibility: visible;
+}
+
+.widget .children {
+	position: absolute;
+	margin-top: 8px;
+	left: 0px;
+	width: 100%;
+	height: 0px;
+	visibility: hidden;
+	background-color: white;
+	border-top: 2px solid rgba(0,0,0,0.1);
+	border-bottom: 2px solid black;
+	padding: 6px 0px;
+	overflow: hidden;
+	z-index: 99;
+}
+
+.widget a {
+	padding-bottom: 8px;
+}
+
+.widget a:hover ~ ul,
+.widget .children:hover {
+	height: auto;
+	visibility: visible;	
+}
+
+#menu {
+	background-color: white;
+	border-bottom: 2px solid black;
+	position: relative;
+}
+
+#menu h2 {
+	position: relative;
+	top: 50%;
+	transform: translateY( -50% );
+	-o-transform: translateY( -50% );
+	-ms-transform: translateY( -50% );
+	-moz-transform: translateY( -50% );
+	-webkit-transform: translateY( -50% );
+	font-size: 1.3em;
+	margin: 0px;
+}
+
+#menu ul {
+	text-align: left;
+}
+
+.widget-area {
+	height: 100%;
+}
+
+#menu .widget li,
+#primary-menu .menu-level-1 li {
+	display: inline-block;
+	text-align: center;
+	width: 20%;
+	margin-left: -4px;
+	padding: 8px 0px;
+}
+
+/*
+ * Social Media Icons
+ */
+
+ #menu .changsocialmedia > *:first-child {
+ 	position: relative;
+ 	top: 50%;
+ 	transform: translateY( -50% );
+	-o-transform: translateY( -50% );
+	-ms-transform: translateY( -50% );
+	-moz-transform: translateY( -50% );
+	-webkit-transform: translateY( -50% );
+ }
+
+#menu #social-media-icons-menu li {
+	padding: 0px;
+	width: auto;
+	height: 100%;
+}
+
+/*
+ * Search Widget
+ */
+
+#menu .changsearch > *:first-child {
+	position: relative;
+	top: 50%;
+	transform: translateY( -50% );
+	-o-transform: translateY( -50% );
+	-ms-transform: translateY( -50% );
+	-moz-transform: translateY( -50% );
+	-webkit-transform: translateY( -50% );
+}
+
+/*
+* Javascript Menu
+*/
+
+#chang-sub-menu-wrapper {
+	display: block;
+	width: 100%;
+	height: 0px;
+	position: absolute;
+	border-bottom: 2px solid black;
+	background-color: white;
+	z-index: 999;
+	overflow: hidden;
+}
+
+.chang-sub-menu-row {
+	text-align: left;
+	padding: 5px 0px 0px;
+	opacity: 0;
+}
+
+.chang-sub-menu-item {
+	margin-left: -4px;
+	text-align: center;
+	padding: 10px 0px 15px;
+}
+
+.chang-sub-menu-item:first-child {
+	margin-left: 0px;
+}
+
+.chang-sub-menu-item a {
+	height: 100%;
+}
+
+#chang-sub-menu-wrapper .social-media-icon {
+	position: relative;
+	padding: 0px;
+}
+
+#chang-sub-menu-wrapper .social-media-icon .hover {
+	position: absolute;
+	left: 0px;
+}
+
+.chang-sub-menu-row-wrapper,
+.chang-menu-wrapper-item {
+	overflow: hidden;
+}
+
+.chang-sub-menu,
+.chang-sub-menu-row-wrapper {
+	width: 100%;
+}
+
+.chang-sub-menu,
+.sub-menu-open,
+.chang-sub-menu-item {
+	transition: background-color .2s;
+	-o-transition: background-color .2s;
+	-moz-transition: background-color .2s;
+	-webkit-transition: background-color .2s;
+	transition: box-shadow .2s;
+	-o-transition: box-shadow .2s;
+	-moz-transition: box-shadow .2s;
+	-webkit-transition: box-shadow .2s;
+	transition: border .2s;
+	-o-transition: border .2s;
+	-moz-transition: border .2s;
+	-webkit-transition: border .2s;
+}
+
+.sub-menu-open {
+	box-shadow: -2px 0px 4px rgba(0,0,0,0.3);
+	-moz-box-shadow: -2px 0px 4px rgba(0,0,0,0.3);
+	-webkit-box-shadow: -2px 0px 4px rgba(0,0,0,0.3);
+}
+
+/*******************************************************************************
+
+	Column Sizes
+
+*******************************************************************************/
+
+
+.column {
+	display: inline-block;
+}
+
+.column:first-child {
+	margin-left: 0px;
+}
+
+#one-column ul {
+	width: 100%;
+}
+
+#two-columns ul {
+	width: 50%;
+}
+
+#three-columns ul {
+	width: 33.3333333333333333333333%;
+}
+
+#four-columns ul {
+	width: 25%;
+}
+
+#five-columns ul {
+	width: 20%;
+}
+
+#six-columns ul {
+	width: 16.666666666666666666666%;
+}
+
+#seven-columns ul {
+	width: 14.285714286%;
+}
+
+#eight-columns ul {
+	width: 12.5%;
+}
+
+#nine-columns ul{
+	width: 11.111111111111111111111111%;
+}
+
+#ten-columns ul {
+	width: 10%;
+}
+
+/*******************************************************************************
+
+	Featured Post
+
+*******************************************************************************/
+
+#featured-post-layout-1 {
+	width: 100%;
+}
+
+#featured-post-layout-1 #featured-post-image {
+	display: block;
+	height: 700px;
+	overflow: hidden;
+	position: relative;
+	border-bottom: 1px solid black;
+}
+
+#featured-post-layout-1 #featured-post-image img {
+	width: 100%;
+	height: auto;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate( -50%, -50% );
+	-o-transform: translate( -50%, -50% );
+	-ms-transform: translate( -50%, -50% );
+	-moz-transform: translate( -50%, -50% );
+	-webkit-transform: translate( -50%, -50% );
+}
+
+#featured-post-layout-1 #featured-post-content {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	padding: 20px 0px 30px;
+}
+
+#featured-post-layout-1 #featured-post-content > div {
+	display: table-row;
+	width: 100%;
+}
+
+#featured-post-layout-1 #featured-post-main {
+	display: table-cell;
+}
+
+#featured-post-layout-1 #featured-post-main h2 {
+	margin-top: 0px;
+}
+
+#featured-post-layout-1 #featured-post-main p:last-child {
+	margin-bottom: 0px;
+}
+
+#featured-post-layout-1 #featured-post-footer {
+	border-left: 2px solid rgba(0,0,0,0.2);
+	padding-left: 20px;
+	display: table-cell;
+	width: 33.333333333333333333333%;
+}
+
+#featured-post-layout-1 #featured-post-footer p:first-child {
+	margin-top: 0px;
+}
+
+#featured-post-layout-1 #featured-post-footer p:last-child {
+	margin-bottom: 0px;
+}
+
+/*
+	Layout 2
+*/
+
+#featured-post-layout-2 #featured-post-image {
+	display: block;
+	width: 598px;
+	height: 598px;
+	border: 1px solid black;
+	margin: 0px 20px 20px 0px;
+	float: left;
+}
+
+#featured-post-layout-2 #featured-post-image img {
+	width: 100%;
+	height: 100%;
+}
+
+#featured-post-layout-2 #featured-post-footer {
+	clear: left;
+}
+
+/*
+	Layout 3
+*/
+
+#featured-post-layout-3 #featured-post-image {
+	display: block;
+	width: 598px;
+	height: 598px;
+	border: 1px solid black;
+	margin: 0px 0px 20px 20px;
+	float: right;
+}
+
+#featured-post-layout-3 #featured-post-image img {
+	width: 100%;
+	height: 100%;
+}
+
+#featured-post-layout-3 #featured-post-footer {
+	clear: right;
+}
+
+/*******************************************************************************
+
+	Posts Style - Synopsis
+
+*******************************************************************************/
+
+.post-synopsis {
+	padding-bottom: 20px;
+}
+
+.post img {
+	display: block;
+	border: 1px solid black;
+	width: calc( 100% - 2px );
+	height: auto;
+}
+
+.post-synopsis .article-body,
+.post-synopsis .article-footer {
+	padding: 0px 10px;
+}
+
+.post-synopsis .article-footer {
+	text-align: right;
+}
+
+.post-synopsis .article-footer .article-date,
+.post-synopsis .article-footer a p {
+	padding: 15px 0px;
+}
+
+.post-synopsis .article-footer p {
+	margin: 3px 0px;
+}
+
+/*******************************************************************************
+
+	Posts Style - Synopsis
+
+*******************************************************************************/
+
+#footer-widget-area {
+	width: 100%;
+}
+
+#footer-widget-area .widget > h2 {
+	margin-top: 0px;
+}
+
+#footer-widget-area .widget {
+	padding: 0px;
+}
+
+#footer-widget-area .social_media_icons li {
+	display: inline-block;
+}
+
+/*******************************************************************************
+
+	Media Query Breakpoints.
+
+*******************************************************************************/
+
+/*
+	Header
+*/
+
+@media screen and (min-width: 481px) {
+	#header {
+		text-align: center;
+	}
+	
+	#header h1 {
+		font-size: 250%;
+	}
+}
+
+@media screen and (min-width: 960px) {
+	#header #title {
+		height: 60px;
+	}
+
+	#header h1 {
+		font-size: 300%;
+	}
+}
+
+/*
+	Column break points.
+*/
+/*
+@media screen and (min-width: 481px) {
+	#one-column {
+		display: none;
+	}
+	
+	#two-columns {
+		display: block;
+	}
+}
+
+@media screen and (min-width: 960px) {	
+	#two-columns {
+		display: none;
+	}
+	
+	#three-columns {
+		display: block;
+	}
+}*/

@@ -22,19 +22,37 @@
 			</div>
 	<?php endif;
 	endif;
+
+	// Featured post.
+	if ( true == get_theme_mod( 'show-featured-post' ) ) {
+		$featured_post = get_theme_mod( 'featured-post-option' );
+		if ( $featured_post != 'null' ) {
+			$layout = get_theme_mod( 'featured-post-layout' );
+			if ( $layout == '1' ) {
+				get_template_part( 'featured', 'post_layout_1' );
+			} elseif ( $layout == '2' ) {
+				get_template_part( 'featured', 'post_layout_2' );
+			} elseif ( $layout == '3' ) {
+				get_template_part( 'featured', 'post_layout_3' );
+			}
+		}
+	}
+	
+	// List recent posts.
+	$wrapper = new Post_Wrapper( esc_attr( get_theme_mod( 'column-count' ) ) );
 	
 	if (have_posts()) {
 		while (have_posts()) {
 			the_post();
-			if( ! is_front_page() )	{
-				echo "<h1>".get_the_title()."</h1>";
-			}
-			echo "<p>".the_content()."</p>";
+			
+			$wrapper->add_post( get_the_ID() );
 		}
 	} else {
 		echo "<p>"._e('Sorry, no posts matched your criteria.')."</p>";
 	}
-
+	
+	$wrapper->print();
+	
 	// Comments.
 	if( !is_front_page() ) {
 		echo comments_template();

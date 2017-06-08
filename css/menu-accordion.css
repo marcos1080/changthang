@@ -1,0 +1,77 @@
+/*
+* Javascript Menu
+*/
+
+#chang-sub-menu-wrapper {
+	display: block;
+	width: 100%;
+	height: 0px;
+	position: absolute;
+	border-bottom: 2px solid black;
+	background-color: white;
+	z-index: 999;
+	overflow: hidden;
+}
+
+.chang-sub-menu-row {
+	text-align: left;
+	padding: 5px 0px 0px;
+	opacity: 0;
+}
+
+.chang-sub-menu-item {
+	margin-left: -4px;
+	text-align: center;
+	padding: 10px 0px 15px;
+}
+
+.chang-sub-menu-item:first-child {
+	margin-left: 0px;
+}
+
+.chang-sub-menu-item a {
+	height: 100%;
+}
+
+#chang-sub-menu-wrapper .social-media-icon {
+	position: relative;
+	padding: 0px;
+}
+
+#chang-sub-menu-wrapper .social-media-icon .hover {
+	position: absolute;
+	left: 0px;
+}
+
+.chang-sub-menu-row-wrapper,
+.chang-menu-wrapper-item {
+	overflow: hidden;
+}
+
+.chang-sub-menu,
+.chang-sub-menu-row-wrapper {
+	width: 100%;
+}
+
+.chang-sub-menu,
+.sub-menu-open,
+.chang-sub-menu-item {
+	transition: background-color .2s;
+	-o-transition: background-color .2s;
+	-moz-transition: background-color .2s;
+	-webkit-transition: background-color .2s;
+	transition: box-shadow .2s;
+	-o-transition: box-shadow .2s;
+	-moz-transition: box-shadow .2s;
+	-webkit-transition: box-shadow .2s;
+	transition: border .2s;
+	-o-transition: border .2s;
+	-moz-transition: border .2s;
+	-webkit-transition: border .2s;
+}
+
+.sub-menu-open {
+	box-shadow: -2px 0px 4px rgba(0,0,0,0.3);
+	-moz-box-shadow: -2px 0px 4px rgba(0,0,0,0.3);
+	-webkit-box-shadow: -2px 0px 4px rgba(0,0,0,0.3);
+}
